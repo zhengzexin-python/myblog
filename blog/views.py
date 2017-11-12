@@ -2,12 +2,13 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from blog.models import Post, Category
+from comments.forms import CommentForm
 import markdown
 
 
 # 首页视图
 def index(request):
-    post_list = Post.objects.all().order_by("-create_time")
+    post_list = Post.objects.all()
     return render(request, 'blog/index.html', context={'post_list': post_list})
 
 
@@ -20,7 +21,14 @@ def detail(request, pk):
         'markdown.extensions.codehilite',  # 语法高亮拓展
         'markdown.extensions.toc',
     ])
-    return render(request, 'blog/detail.html', context={'post': post})
+    form = CommentForm()
+    comment_list = post.comment_set.all()
+    context = {
+        'post': post,
+        'form': form,
+        'comment_list': comment_list
+    }
+    return render(request, 'blog/detail.html', context=context)
 
 
 # 归档视图
@@ -31,5 +39,5 @@ def archives(request, year, month):
 
 def category(request, pk):
     cate = get_object_or_404(Category, pk=pk)
-    post_list = Post.objects.filter(category=cate).order_by("-create_time")
-    return render(request,'blog/index.html',{'post_list': post_list})
+    post_list = Post.objects.filter(category=cate)
+    return render(request, 'blog/index.html', {'post_list': post_list})

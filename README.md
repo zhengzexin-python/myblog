@@ -9,3 +9,17 @@
 - jieba 0.39
 - Whoosh 2.7.4
 
+### 安装依赖库
+```shell
+pip install -r requirements.txt
+```
+
+### 同步数据库
+```shell
+python manage.py migrate
+```
+
+### 启动项目
+```shell
+python manage.py runserver
+```
