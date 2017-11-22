@@ -15,6 +15,7 @@ def index(request):
 # 文章视图
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.increase_views()  # 文章浏览数加1
     # 使用markdown进行渲染
     post.body = markdown.markdown(post.body, extensions=[
         'markdown.extensions.extra',
