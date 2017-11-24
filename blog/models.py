@@ -53,4 +53,4 @@ class Post(models.Model):
         super(Post, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-create_time']
+        ordering = ['-create_time']  # 默认按照 create_time 降序排列
