@@ -108,7 +108,11 @@
                     {% get_categories as categories_list %}
                     <ul>
                         {% for categories in  categories_list %}
-                            <li><a href="{% url 'blog:category' categories.pk %}">{{ categories }}</a></li>
+                            <li>
+                                <a href="{% url 'blog:category' categories.pk %}">{{ categories.name }}
+                                    <span class="post-count">{{ categories.num_posts }}</span>
+                                </a>
+                            </li>
                         {% empty %}
                             暂无分类
                         {% endfor %}
@@ -116,44 +120,23 @@
                     </ul>
                 </div>
 
-               {% comment %} <div class="widget widget-tag-cloud">
+                <div class="widget widget-tag-cloud">
                     <h3 class="widget-title">标签云</h3>
-                    <ul>
-                        <li>
-                            <a href="#">Django</a>
-                        </li>
-                        <li>
-                            <a href="#">Python</a>
-                        </li>
-                        <li>
-                            <a href="#">Java</a>
-                        </li>
-                        <li>
-                            <a href="#">笔记</a>
-                        </li>
-                        <li>
-                            <a href="#">文档</a>
-                        </li>
-                        <li>
-                            <a href="#">AngularJS</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">Snippet</a>
-                        </li>
-                        <li>
-                            <a href="#">jQuery</a>
-                        </li>
-                    </ul>
+                    {% get_tags as tag_list %}
+
+                    {% for tag in tag_list %}
+
+                        <span class="label label-important"><a
+                                href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}</a></span>
+
+                    {% empty %}
+                        暂无标签！
+                    {% endfor %}
+
                 </div>
                 <div class="rss">
                     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
-                </div>{% endcomment %}
+                </div>
             </aside>
         </div>
     </div>
