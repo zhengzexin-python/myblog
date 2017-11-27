@@ -1,11 +1,12 @@
+import markdown
 from django.contrib.auth.models import User
 from django.db import models
-import markdown
-from django.utils.html import strip_tags
-# Create your models here.
-
 # 分类
 from django.urls import reverse
+from django.utils.html import strip_tags
+
+
+# Create your models here.
 
 
 class Category(models.Model):
@@ -54,3 +55,5 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-create_time']  # 默认按照 create_time 降序排列
+
+
