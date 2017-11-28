@@ -5,6 +5,8 @@ from blog.models import Post, Category, Tag
 from comments.forms import CommentForm
 from django.views.generic import ListView, DetailView
 import markdown
+from markdown.extensions.toc import TocExtension
+from django.utils.text import slugify
 
 
 # 首页视图
@@ -83,11 +85,13 @@ class PostDetailView(DetailView):
 
     def get_object(self, queryset=None):
         post = super(PostDetailView, self).get_object(queryset=None)
-        post.body = markdown.markdown(post.body, extensions=[
+        md = markdown.Markdown(extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
-            'markdown.extensions.toc'
+            TocExtension(slugify=slugify)
         ])
+        post.body = md.convert(post.body)
+        post.toc = md.toc
         return post
 
     def get_context_data(self, **kwargs):
