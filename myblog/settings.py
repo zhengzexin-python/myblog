@@ -35,9 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',  # 注册blog应用
-    'comments',  # 注册comments应用
-    'pagedown'
+    'blog',  # 注册 blog 应用
+    'comments',  # 注册 comments 应用
+    'pagedown',  # 注册 pagedown
+    'haystack'  # 注册 haystack 搜索应用
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# haystack配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',  # 设置搜索引擎
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),  # 设置索引目录
+    },
+}
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10  # 设置搜索结果分页大小
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'  # 每当有文章更新时就更新索引
